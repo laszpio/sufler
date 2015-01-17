@@ -6,7 +6,7 @@ describe Sufler::Cue do
     Sufler::Cue.new(
       starts: "00:00.000",
       ends: "00:01.000",
-      line: "First second"
+      line: "First second text"
     )
   end
 
@@ -14,7 +14,9 @@ describe Sufler::Cue do
 
     subject { cue.starts }
 
-    it { expect(subject).to be_a String }
+    it { is_expected.to be_a String }
+
+    it { is_expected.to eql "00:00.000" }
 
   end
 
@@ -22,7 +24,9 @@ describe Sufler::Cue do
 
     subject { cue.ends }
 
-    it { expect(subject).to be_a String }
+    it { is_expected.to be_a String }
+
+    it { is_expected.to eql "00:01.000" }
 
   end
 
@@ -30,19 +34,22 @@ describe Sufler::Cue do
 
     subject { cue.line }
 
-    it { expect(subject).to be_a String }
+    it { is_expected.to be_a String }
 
+    it { is_expected.to eql "First second text" }
   end
 
   describe "#to_s" do
 
-    it { expect(cue.to_s).to be_a String }
+    subject { cue.to_s }
 
-    let(:lines) { cue.to_s.lines }
+    it { is_expected.to be_a String }
+
+    let(:string_lines) { cue.to_s.lines }
 
     context "1st line" do
 
-      subject { lines[0] }
+      subject { string_lines.first }
 
       it "starts with time marks" do
         expect(subject).to start_with "#{cue.starts} --> #{cue.ends}"
@@ -52,13 +59,12 @@ describe Sufler::Cue do
 
     context "2nd line" do
 
-      subject { lines[1] }
+      subject { string_lines[1] }
 
       it "contains cue's text" do
         expect(subject).to match cue.line
       end
 
     end
-
   end
 end
