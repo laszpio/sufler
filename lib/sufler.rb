@@ -1,5 +1,5 @@
 require "sufler/version"
+require "cue"
 
 module Sufler
-  # Your code goes here...
 end
