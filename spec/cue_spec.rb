@@ -6,7 +6,18 @@ describe Sufler::Cue do
     Sufler::Cue.new(
       starts: "00:00.000",
       ends: "00:01.000",
-      line: "First second text"
+      lines: "First second's text line"
+    )
+  end
+
+  let(:multi_lines_cue) do
+    Sufler::Cue.new(
+      starts: "00:00.000",
+      ends: "00:01.000",
+      lines: [
+        "First second's text part 1",
+        "First second's text part 2"
+      ]
     )
   end
 
@@ -30,39 +41,71 @@ describe Sufler::Cue do
 
   end
 
-  describe "#line" do
+  describe "#lines" do
 
-    subject { cue.line }
+    context "single text line" do
 
-    it { is_expected.to be_a String }
+      subject { cue.lines }
 
-    it { is_expected.to eql "First second text" }
+      it { is_expected.to be_a Array }
+
+      it { expect(subject).to include "First second's text line" }
+
+    end
+
+    context "multiple text lines" do
+
+      subject { multi_lines_cue.lines }
+
+      it { is_expected.to be_a Array }
+
+      it { is_expected.to include "First second's text part 1" }
+
+      it { is_expected.to include "First second's text part 2" }
+
+    end
+
   end
 
   describe "#to_s" do
 
-    subject { cue.to_s }
+    context "single lines cue" do
 
-    it { is_expected.to be_a String }
+      subject { cue.to_s }
 
-    let(:string_lines) { cue.to_s.lines }
+      it { is_expected.to be_a String }
 
-    context "1st line" do
+      it "has 2 lines" do
+        expect(subject.lines.size).to be 2
+      end
 
-      subject { string_lines.first }
+      it "starts with formated times" do
+        expect(subject.lines.first).to start_with "#{cue.starts} --> #{cue.ends}"
+      end
 
-      it "starts with time marks" do
-        expect(subject).to start_with "#{cue.starts} --> #{cue.ends}"
+      it "contains formatted cue's text in the second line" do
+        expect(subject.lines.last).to eql cue.lines.first
       end
 
     end
 
-    context "2nd line" do
+    context "multi lines cue" do
 
-      subject { string_lines[1] }
+      subject { multi_lines_cue.to_s }
 
-      it "contains cue's text" do
-        expect(subject).to match cue.line
+      it { is_expected.to be_a String }
+
+      it "has 3 lines" do
+        expect(subject.lines.size).to be 3
+      end
+
+      it "starts with formated times" do
+        expect(subject.lines.first).to start_with "#{cue.starts} --> #{cue.ends}"
+      end
+
+      it "contains formatted cue's text for every line" do
+        is_expected.to match "- First second's text part 1\n"
+        is_expected.to match "- First second's text part 2\n"
       end
 
     end
