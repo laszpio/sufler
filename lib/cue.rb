@@ -12,10 +12,14 @@ module Sufler
     end
 
     def to_s
-      ["#{starts} --> #{ends}", formated_lines].join("\n")
+      [timestamp_header, formated_lines].join("\n")
     end
 
     private
+
+    def timestamp_header
+      "#{starts} --> #{ends}"
+    end
 
     def formated_lines
       lines.count.eql?(1) ? lines : lines.map { |line| "- #{line}\n" }.join
