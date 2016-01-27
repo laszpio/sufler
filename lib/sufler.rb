@@ -1,6 +1,6 @@
-require "sufler/version"
-require "cue"
-require "vtt"
+require 'sufler/version'
+require 'cue'
+require 'vtt'
 
 module Sufler
 end

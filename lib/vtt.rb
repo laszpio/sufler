@@ -3,7 +3,7 @@ module Sufler
   class VTT
     attr_accessor :cues
 
-    def initialize opts = {}
+    def initialize(opts = {})
       @cues = opts.fetch(:cues, [])
     end
 
@@ -14,7 +14,7 @@ module Sufler
     private
 
     def header
-      "WEBVTT"
+      'WEBVTT'
     end
 
     def empty_line
@@ -26,4 +26,3 @@ module Sufler
     end
   end
 end
-

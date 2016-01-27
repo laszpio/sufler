@@ -3,11 +3,11 @@ module Sufler
   class Cue
     attr_accessor :starts, :ends, :lines
 
-    def initialize opts = {}
-      if !opts.empty?
+    def initialize(opts = {})
+      unless opts.empty?
         @starts = opts[:starts]
         @ends = opts[:ends]
-        @lines  = opts[:lines].is_a?(Array) ? opts[:lines] : [opts[:lines]]
+        @lines = opts[:lines].is_a?(Array) ? opts[:lines] : [opts[:lines]]
       end
     end
 
@@ -24,6 +24,5 @@ module Sufler
     def formated_lines
       lines.count.eql?(1) ? lines : lines.map { |line| "- #{line}\n" }.join
     end
-
   end
 end
