@@ -1,6 +1,7 @@
 require 'sufler/version'
-require 'cue'
-require 'vtt'
+require 'sufler/cue'
+require 'sufler/vtt'
 
+# Simple webvtt wrapper
 module Sufler
 end
